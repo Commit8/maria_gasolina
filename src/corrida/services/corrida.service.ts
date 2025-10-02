@@ -32,6 +32,8 @@ export class CorridaService {
 
   async create(corrida: Corrida): Promise<Corrida> {
     await this.categoriaService.findById(corrida.categoria.id);
+    await this.calcularValorCorrida(corrida.distancia, corrida.categoria.id);
+
     return this.corridaRepository.save(corrida);
   }
 
@@ -46,12 +48,12 @@ export class CorridaService {
     return await this.corridaRepository.delete(id);
   }
 
-  //   async calcularValorCorrida(
-  //     distancia: number,
-  //     categoriaId: number,
-  //   ): Promise<number> {
-  //     const categoria = await this.categoriaService.findById(categoriaId);
-  //     const valorCorrida = (await distancia) * categoria.preco;
-  //     return valorCorrida;
-  //   }
+  async calcularValorCorrida(
+    distancia: number,
+    categoriaId: number,
+  ): Promise<number> {
+    const categoria = await this.categoriaService.findById(categoriaId);
+    const valorCorrida = distancia * categoria.preco;
+    return valorCorrida;
+  }
 }
