@@ -15,5 +15,5 @@ export class Categoria {
   preco: number;
 
   @OneToMany(() => Corrida, (corrida) => corrida.categoria)
-  categoria: Categoria[];
+  corrida: Corrida[];
 }

@@ -41,9 +41,9 @@ export class CorridaService {
     return this.corridaRepository.save(corrida);
   }
 
-  async detele(id: number): Promise<DeleteResult> {
+  async delete(id: number): Promise<DeleteResult> {
     await this.findById(id);
-    return this.corridaRepository.delete(id);
+    return await this.corridaRepository.delete(id);
   }
 
   //   async calcularValorCorrida(
