@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Usuario } from './usuario.entity';
+import { Usuario } from '../entities/usuario.entity';
 
 @Injectable()
 export class UsuarioService {
@@ -11,12 +11,13 @@ export class UsuarioService {
   ) {}
 
   // Buscar por nome de usuário
-  async findByUsuario(usuario: string): Promise<Usuario | undefined> {
+  async findByUsuario(email: string): Promise<Usuario | null> {
     return await this.usuarioRepository.findOne({
-      where: { usuario },
+      where: {
+        email: email,
+      },
     });
   }
-
   async findAll(): Promise<Usuario[]> {
     return await this.usuarioRepository.find();
   }
@@ -33,14 +34,8 @@ export class UsuarioService {
     return usuario;
   }
 
-  async findByEmail(email: string): Promise<Usuario | undefined> {
-    return await this.usuarioRepository.findOne({
-      where: { email },
-    });
-  }
-
   async create(usuario: Usuario): Promise<Usuario> {
-    const buscaUsuario = await this.findByEmail(usuario.email);
+    const buscaUsuario = await this.findByUsuario(usuario.email);
 
     if (buscaUsuario) {
       throw new HttpException('E-mail já cadastrado!', HttpStatus.BAD_REQUEST);
@@ -52,7 +47,7 @@ export class UsuarioService {
   async update(usuario: Usuario): Promise<Usuario> {
     await this.findById(usuario.id);
 
-    const buscaUsuario = await this.findByEmail(usuario.email);
+    const buscaUsuario = await this.findByUsuario(usuario.email);
     if (buscaUsuario && buscaUsuario.id !== usuario.id) {
       throw new HttpException('E-mail já cadastrado!', HttpStatus.BAD_REQUEST);
     }

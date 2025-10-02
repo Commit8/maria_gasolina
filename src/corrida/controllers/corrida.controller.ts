@@ -11,6 +11,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { Corrida } from '../entities/corrida.entity';
+import { CorridaService } from '../services/corrida.service';
 
 @Controller('/corridas')
 export class CorridaController {

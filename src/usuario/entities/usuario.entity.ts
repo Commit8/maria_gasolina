@@ -1,5 +1,6 @@
 import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Corrida } from '../../corrida/entities/corrida.entity';
 
 @Entity({ name: 'tb_usuario' })
 export class Usuario {
