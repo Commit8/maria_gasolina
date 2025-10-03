@@ -44,6 +44,12 @@ export class CorridaService {
   async update(corrida: Corrida): Promise<Corrida> {
     await this.findById(corrida.id);
     await this.categoriaService.findById(corrida.categoria.id);
+    corrida.valorCorrida = await this.calcularValorCorrida(
+      corrida.distancia,
+      corrida.categoria.id,
+    );
+    corrida.valorCorrida = Number(corrida.valorCorrida.toFixed(2));
+
     return this.corridaRepository.save(corrida);
   }
 
