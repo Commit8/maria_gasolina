@@ -54,9 +54,4 @@ export class UsuarioService {
 
     return await this.usuarioRepository.save(usuario);
   }
-
-  async delete(id: number): Promise<void> {
-    const usuario = await this.findById(id);
-    await this.usuarioRepository.remove(usuario);
-  }
 }

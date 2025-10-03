@@ -1,11 +1,11 @@
 import {
   Body,
   Controller,
-  Delete,
   Get,
   HttpCode,
   HttpStatus,
   Param,
+  ParseIntPipe,
   Post,
   Put,
 } from '@nestjs/common';
@@ -16,37 +16,27 @@ import { UsuarioService } from '../services/usuario.service';
 export class UsuarioController {
   constructor(private readonly usuarioService: UsuarioService) {}
 
-  @Get()
+  @Get('/all')
   @HttpCode(HttpStatus.OK)
-  async findAll(): Promise<Usuario[]> {
-    return await this.usuarioService.findAll();
+  findAll(): Promise<Usuario[]> {
+    return this.usuarioService.findAll();
   }
 
   @Get('/:id')
   @HttpCode(HttpStatus.OK)
-  async findById(@Param('id') id: number): Promise<Usuario> {
-    return await this.usuarioService.findById(id);
+  findById(@Param('id', ParseIntPipe) id: number): Promise<Usuario> {
+    return this.usuarioService.findById(id);
   }
 
-  @Post()
+  @Post('/cadastrar')
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() usuario: Usuario): Promise<Usuario> {
-    return await this.usuarioService.create(usuario);
+    return this.usuarioService.create(usuario);
   }
 
-  @Put('/:id')
+  @Put('/atualizar')
   @HttpCode(HttpStatus.OK)
-  async update(
-    @Param('id') id: number,
-    @Body() usuario: Usuario,
-  ): Promise<Usuario> {
-    usuario.id = id;
-    return await this.usuarioService.update(usuario);
-  }
-
-  @Delete('/:id')
-  @HttpCode(HttpStatus.NO_CONTENT)
-  async delete(@Param('id') id: number): Promise<void> {
-    return await this.usuarioService.delete(id);
+  async update(@Body() usuario: Usuario): Promise<Usuario> {
+    return this.usuarioService.update(usuario);
   }
 }
