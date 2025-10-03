@@ -32,7 +32,11 @@ export class CorridaService {
 
   async create(corrida: Corrida): Promise<Corrida> {
     await this.categoriaService.findById(corrida.categoria.id);
-    await this.calcularValorCorrida(corrida.distancia, corrida.categoria.id);
+    corrida.valorCorrida = await this.calcularValorCorrida(
+      corrida.distancia,
+      corrida.categoria.id,
+    );
+    corrida.valorCorrida = Number(corrida.valorCorrida.toFixed(2));
 
     return this.corridaRepository.save(corrida);
   }

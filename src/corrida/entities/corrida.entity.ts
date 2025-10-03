@@ -10,11 +10,10 @@ export class Corrida {
   id: number;
 
   @IsNotEmpty()
-  @Column({ type: 'int', nullable: false })
+  @Column({ type: 'decimal', precision: 6, scale: 2 })
   distancia: number;
 
-  @IsNotEmpty()
-  @Column({ type: 'decimal', precision: 6, scale: 2, nullable: false })
+  @Column({ type: 'decimal', precision: 6, scale: 2 })
   valorCorrida: number;
 
   //Relacionamento entre as tabelas
