@@ -1,8 +1,8 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Usuario } from '../entities/usuario.entity';
 import { Bcrypt } from '../../auth/bcrypt/bcrypt';
+import { Usuario } from '../entities/usuario.entity';
 
 @Injectable()
 export class UsuarioService {
@@ -18,10 +18,17 @@ export class UsuarioService {
       where: {
         email: email,
       },
+      relations: {
+        corrida: true,
+      },
     });
   }
   async findAll(): Promise<Usuario[]> {
-    return await this.usuarioRepository.find();
+    return await this.usuarioRepository.find({
+      relations: {
+        corrida: true,
+      },
+    });
   }
 
   async findById(id: number): Promise<Usuario> {
