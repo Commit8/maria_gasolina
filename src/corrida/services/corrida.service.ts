@@ -63,7 +63,7 @@ export class CorridaService {
     categoriaId: number,
   ): Promise<number> {
     const categoria = await this.categoriaService.findById(categoriaId);
-    const valorCorrida = distancia * categoria.preco;
+    const valorCorrida = distancia * categoria.taxaGasolina;
     return valorCorrida;
   }
 }

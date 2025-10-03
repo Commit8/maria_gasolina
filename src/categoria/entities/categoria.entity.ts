@@ -12,7 +12,7 @@ export class Categoria {
   veiculo: string;
 
   @Column({ type: 'decimal', precision: 10, scale: 2 })
-  preco: number;
+  taxaGasolina: number;
 
   @OneToMany(() => Corrida, (corrida) => corrida.categoria)
   corrida: Corrida[];
